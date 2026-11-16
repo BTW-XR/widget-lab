@@ -1,0 +1,11 @@
+{
+  "name": "maps-widget-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "check": "node --check src/app.js && node --check src/map.js && node --check src/data.js"
+  }
+}
