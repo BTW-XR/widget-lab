@@ -225,7 +225,7 @@ export function createGallery({ widgets, createContext, scenarios, grid, dialog,
       if (!active()) return;
       track.pointer.release();
       track.index += 1;
-      schedule(track, Math.max(260, (step.duration || 1250) - (performance.now() - started)));
+      schedule(track, step.holdMs ?? Math.max(260, 1250 - (performance.now() - started)));
     } catch (error) { if (!signal.aborted) fail(track, error.message); }
   }
   function start(id, single) {

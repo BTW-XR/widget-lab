@@ -45,7 +45,7 @@ Maps uses locally bundled Google Sans, teal actions, outlined secondary buttons,
 
 ## Demo mode
 
-Use the play icon beside a widget title to loop through its compact interactions, expanded view, and return to the gallery. **Demo all** runs the six compact cards together without opening dialogs. Each widget performs roughly one action per second; video playback gets a brief extra moment.
+Use the play icon beside a widget title to loop through its compact interactions, expanded view, and return to the gallery. **Demo all** runs the six compact cards together without opening dialogs. Simple toggles keep a brisk rhythm. Searches, category changes, routes, and expanded views pause for 1.1–2.3 seconds after the action completes; video playback and new Shorts get 2.2–2.8 seconds to be seen. Each loop leaves at least two seconds to absorb its final state. Pointer movement and typing keep their existing speed.
 
 Pause or resume an individual widget, or use **Pause all** / **Resume all**. **Exit demos** restores the ordinary gallery and its previous filter. Clicking or typing inside a running widget takes over that widget only; its temporary state stays available for manual exploration until you exit or replay it. Opening a widget manually pauses the other demos until the dialog closes. Moving the page to the background pauses playback; resume explicitly when you return.
 
@@ -112,5 +112,5 @@ All application assets are local. The MollyTea image is reused from the user's s
 ## Suggested commit message
 
 ```text
-Replace demo highlights with animated per-widget pointers
+Tune widget demo pacing with contextual pauses
 ```
