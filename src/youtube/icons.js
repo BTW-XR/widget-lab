@@ -1,5 +1,6 @@
 import { icon as sharedIcon } from '../icons.js';
 const paths = {
+  youtube: '<rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="currentColor" stroke="none"/><path d="m10 8 6 4-6 4Z" fill="white" stroke="none"/>',
   play: '<path d="m8 4 13 8-13 8Z" fill="currentColor" stroke="none"/>',
   pause: '<path d="M7 4h4v16H7zm7 0h4v16h-4z" fill="currentColor" stroke="none"/>',
   next: '<path d="m5 5 11 7-11 7Z" fill="currentColor" stroke="none"/><path d="M19 5v14"/>',

@@ -41,7 +41,7 @@ The gallery is responsive and rearranges fixed **360 × 336 px cards** into thre
 
 Expanded Maps and YouTube content remains **998 × 616 px** and **1038 × 616 px** respectively. The modal shell fits the viewport, keeps its close control visible, and allows scrolling across the fixed content when needed. Shorts fills its compact frame with video and overlays controls along the right edge.
 
-Maps uses locally bundled Google Sans, teal actions, outlined secondary buttons, and restrained map surfaces. YouTube uses locally bundled Roboto, neutral surfaces, black action pills, and red playback accents. Body and control text is generally 14–16 px; metadata is 12–13 px. Both font families are licensed under the SIL Open Font License; licenses are in `assets/fonts/`.
+Maps uses locally bundled Google Sans, teal actions, outlined secondary buttons, and restrained map surfaces. YouTube uses locally bundled Roboto, neutral surfaces, and black action pills. Small play logos, red primary playback buttons, and subtle subscription accents reinforce its identity without tinting whole cards. Body and control text is generally 14–16 px; metadata is 12–13 px. Both font families are licensed under the SIL Open Font License; licenses are in `assets/fonts/`.
 
 ## Run locally
 
@@ -81,7 +81,7 @@ The navigation mute control demonstrates UI state only; the demo does not play a
 - `src/map.js`: original SVG map, markers, and route rendering.
 - `src/icons.js`: shared SVG icon helpers.
 - `src/fonts.css`: local Google Sans and Roboto font faces.
-- `src/gallery.css`: shared fixed canvas, gallery, controls, and dialogs.
+- `src/gallery.css`: shared responsive gallery, controls, and dialog shells.
 - `src/styles.css`: Maps components and expanded states.
 - `scripts/serve.mjs`: dependency-free local static server.
 - `scripts/build.mjs`: static build output.
@@ -99,5 +99,5 @@ All application assets are local. The MollyTea image is reused from the user's s
 ## Suggested commit message
 
 ```text
-style: compact fixed-size widgets within a responsive gallery
+style: add restrained YouTube brand accents and play marks
 ```
