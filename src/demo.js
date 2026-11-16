@@ -1,5 +1,6 @@
 // One gallery, independent interaction contexts, and cancellable demo tracks.
 // Both manual events and scripted steps go through dispatch().
+import { createDemoPointer, demoDelay } from './demo-pointer.js';
 const glyph = name => `<svg viewBox="0 0 24 24" aria-hidden="true" class="demo-icon">${name === 'pause' ? '<path d="M7 5h4v14H7zm6 0h4v14h-4z"/>' : name === 'stop' ? '<rect x="6" y="6" width="12" height="12" rx="2"/>' : '<path d="M7 5 19 12 7 19Z"/>'}</svg>`;
 
 export function createGallery({ widgets, createContext, scenarios, grid, dialog, content, icon, youtube = false }) {
@@ -87,6 +88,7 @@ export function createGallery({ widgets, createContext, scenarios, grid, dialog,
       updateMarkup(content.querySelector('.demo-controls'), controls(id));
       content.querySelector('.mini-eyebrow').textContent = tracks.has(id) ? description(tracks.get(id)) : 'A LITTLE MORE ROOM';
     }
+    tracks.forEach(track => track.pointer.sync(track.status, !!modal && modal.context !== track.context));
   }
   function cardMarkup(widget) {
     return `<article class="widget-item" data-widget-id="${widget.id}"><div class="widget-label"><div><span class="widget-number">${widget.number}</span><h2>${widget.title}</h2></div><div class="widget-tools"><span class="demo-controls"></span><button class="expand-button" data-action="expand" data-widget="${widget.id}" aria-label="Expand ${widget.title}" title="Expand ${widget.title}">${icon('expand')}</button></div></div><div class="widget-card ${youtube ? `yt-card yt-${widget.id}-card` : `${widget.id}-card`}"></div><p class="widget-caption"></p></article>`;
@@ -158,9 +160,10 @@ export function createGallery({ widgets, createContext, scenarios, grid, dialog,
     else context.act(action, target.dataset, target);
   }
   function cancel(track) {
-    clearTimeout(track.timer); clearTimeout(track.actionTimer);
-    track.generation += 1;
-    roots(track.context).forEach(root => root.querySelectorAll('.demo-target').forEach(node => node.classList.remove('demo-target')));
+    clearTimeout(track.timer);
+    track.controller?.abort();
+    track.pointer.cancel();
+    roots(track.context).forEach(root => root.querySelectorAll('.demo-hover').forEach(node => node.classList.remove('demo-hover')));
   }
   function fail(track, message) {
     cancel(track); track.status = 'error'; track.context.pause?.(); syncControls();
@@ -171,9 +174,14 @@ export function createGallery({ widgets, createContext, scenarios, grid, dialog,
     if (!runnable(track)) return;
     track.timer = setTimeout(() => tick(track), delay);
   }
-  function tick(track) {
+  async function tick(track) {
     if (!runnable(track)) return;
-    roots(track.context).forEach(root => root.querySelectorAll('.demo-target').forEach(node => node.classList.remove('demo-target')));
+    const controller = new AbortController();
+    track.controller = controller;
+    const { signal } = controller;
+    const started = performance.now();
+    const active = () => !signal.aborted && runnable(track);
+    roots(track.context).forEach(root => root.querySelectorAll('.demo-hover').forEach(node => node.classList.remove('demo-hover')));
     if (track.index === track.steps.length) {
       if (modal?.context === track.context) close();
       track.context.pause?.(); track.context.reset(); track.index = 0;
@@ -183,29 +191,48 @@ export function createGallery({ widgets, createContext, scenarios, grid, dialog,
     const target = scope(track)?.querySelector(step.selector);
     if (!target || target.disabled) { fail(track, `Missing control: ${step.selector}`); return; }
     track.label = step.label; syncControls();
-    target.classList.add('demo-target');
+    target.classList.add('demo-hover');
     if (modal?.context === track.context) target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
-    const generation = track.generation;
-    track.actionTimer = setTimeout(() => {
-      if (!runnable(track) || track.generation !== generation) return;
+    try {
+      await track.pointer.move(target, { signal });
+      await demoDelay(90, signal);
+      if (!active()) return;
       // Rendering replaces nodes; never retain an action target across ticks.
       const current = scope(track)?.querySelector(step.selector);
       if (!current) { fail(track, 'The current control is no longer available.'); return; }
-      automatic = true;
-      try {
-        if ('value' in step) { current.value = step.value; track.context.input(current); }
-        else dispatch(track.context, current);
-        track.index += 1;
-      } catch (error) { fail(track, error.message); }
-      finally { automatic = false; }
-      scope(track)?.querySelector(step.selector)?.classList.add('demo-target');
-      schedule(track, step.duration ? step.duration - 180 : 820);
-    }, 180);
+      track.pointer.align(current);
+      track.pointer.press();
+      await demoDelay(100, signal);
+      if (!active()) return;
+      if ('value' in step && current.matches('input[type="range"]')) {
+        await track.pointer.drag(current, { value: step.value, signal, onInput: track.context.input });
+      } else if ('value' in step && current.matches('input[type="search"]')) {
+        const value = String(step.value);
+        current.value = ''; track.context.input(current);
+        track.pointer.release();
+        for (let length = 1; length <= value.length; length++) {
+          await demoDelay(Math.min(65, 340 / value.length), signal);
+          if (!active()) return;
+          current.value = value.slice(0, length); track.context.input(current);
+        }
+      } else {
+        automatic = true;
+        try {
+          if ('value' in step) { current.value = step.value; track.context.input(current); }
+          else dispatch(track.context, current);
+        } finally { automatic = false; }
+      }
+      if (!active()) return;
+      track.pointer.release();
+      track.index += 1;
+      schedule(track, Math.max(260, (step.duration || 1250) - (performance.now() - started)));
+    } catch (error) { if (!signal.aborted) fail(track, error.message); }
   }
   function start(id, single) {
     if (tracks.has(id)) stop(id, false);
     const context = makeContext(id);
-    const track = { id, context, status: 'running', index: 0, generation: 0, label: 'Starting demo…', steps: scenarios(id, single) };
+    const track = { id, context, status: 'running', index: 0, label: 'Starting demo…', steps: scenarios(id, single) };
+    track.pointer = createDemoPointer(id, () => modal?.context === context ? dialog : article(id));
     tracks.set(id, track);
     renderCard(id); syncControls(); schedule(track, 400);
   }
@@ -216,6 +243,7 @@ export function createGallery({ widgets, createContext, scenarios, grid, dialog,
     if (!track) return;
     cancel(track); track.status = 'stopped'; track.context.pause?.();
     if (modal?.context === track.context) close();
+    track.pointer.destroy();
     tracks.delete(id); renderCard(id);
     if (finish && !tracks.size) finishSession();
     syncControls();
@@ -302,6 +330,6 @@ export function createGallery({ widgets, createContext, scenarios, grid, dialog,
   dialog.addEventListener('cancel', event => { event.preventDefault(); if (modal?.context.owner) { const track = tracks.get(modal.context.owner); cancel(track); track.status = 'manual'; } close(); });
   dialog.addEventListener('click', event => { if (event.target === dialog) { const rect = dialog.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) close(); } });
   document.addEventListener('visibilitychange', () => { if (document.hidden) { normal.pause?.(); tracks.forEach(track => { if (track.status === 'running') pause(track); else track.context.pause?.(); }); syncControls(); } });
-  window.addEventListener('pagehide', () => { tracks.forEach(track => { cancel(track); track.context.pause?.(); }); normal.pause?.(); });
+  window.addEventListener('pagehide', () => { tracks.forEach(track => { cancel(track); track.pointer.destroy(); track.context.pause?.(); }); normal.pause?.(); });
   renderGrid();
 }

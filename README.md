@@ -49,7 +49,7 @@ Use the play icon beside a widget title to loop through its compact interactions
 
 Pause or resume an individual widget, or use **Pause all** / **Resume all**. **Exit demos** restores the ordinary gallery and its previous filter. Clicking or typing inside a running widget takes over that widget only; its temporary state stays available for manual exploration until you exit or replay it. Opening a widget manually pauses the other demos until the dialog closes. Moving the page to the background pauses playback; resume explicitly when you return.
 
-Each demo has its own in-memory state. Demo saves, likes, subscriptions, navigation, speed, and progress never overwrite normal preferences. Exiting restores the original state with videos paused. A subtle highlight and the existing caption identify each action. Media errors pause only the affected demo; replay retries its scenario. Browser fullscreen is always a manual action.
+Each demo has its own in-memory state. Demo saves, likes, subscriptions, navigation, speed, and progress never overwrite normal preferences. Exiting restores the original state with videos paused. Each widget has its own moving dot pointer: it travels to a control, presses with a small click ripple, types searches character by character, and drags the video timeline. The pointer stays in place when paused and disappears on manual takeover. It follows its widget into the expanded dialog; the existing caption describes the action. Media errors pause only the affected demo; replay retries its scenario. Browser fullscreen is always a manual action.
 
 ## Run locally
 
@@ -88,7 +88,8 @@ The navigation mute control demonstrates UI state only; the demo does not play a
 - `src/maps-context.js` and `src/maps-views.js`: Maps interaction state and rendering.
 - `src/demo.js`: gallery, dialogs, isolated demo contexts, playback controls, and cancellable scheduling.
 - `src/demo-scenarios.js`: compact and expanded action sequences for all twelve widgets.
-- `src/demo.css`: compact demo controls and action highlights.
+- `src/demo-pointer.js`: persistent per-widget pointer movement and click feedback.
+- `src/demo.css`: compact demo controls and pointer styling.
 - `src/data.js`: mock places and travel modes.
 - `src/map.js`: original SVG map, markers, and route rendering.
 - `src/icons.js`: shared SVG icon helpers.
@@ -111,5 +112,5 @@ All application assets are local. The MollyTea image is reused from the user's s
 ## Suggested commit message
 
 ```text
-Add individual and simultaneous widget demo playback
+Replace demo highlights with animated per-widget pointers
 ```

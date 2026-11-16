@@ -12,10 +12,15 @@
 .demo-exit:hover { background: #e9edef; }
 .demo-hint { color: #858b91; font-size: 12px; }
 .widget-caption.demo-caption { color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.widget-caption.demo-caption::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: currentColor; margin: 0 7px 2px 0; }
 [data-demo-state="paused"] .demo-caption, [data-demo-state="manual"] .demo-caption, [data-demo-state="error"] .demo-caption { color: #80868b; }
-.demo-target { outline: 2px solid var(--accent) !important; outline-offset: -2px; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 13%, transparent) !important; }
-.yt-media.playing .yt-big-play.demo-target { opacity: 1; }
+.widget-item { position: relative; }
+.demo-pointer { position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; z-index: 30; }
+.demo-pointer[hidden] { display: none; }
+.demo-pointer-dot { position: absolute; width: 16px; height: 16px; border: 2px solid #fff; border-radius: 50%; background: #303134df; box-shadow: 0 1px 5px #0006; transform: translate(-50%, -50%); transition: scale .12s ease, opacity .15s; }
+.demo-pointer.is-pressed .demo-pointer-dot { scale: .75; }
+.demo-pointer.is-paused .demo-pointer-dot { opacity: .45; }
+.demo-pointer-ring { position: absolute; width: 20px; height: 20px; border: 1.5px solid #303134aa; border-radius: 50%; opacity: 0; transform: translate(-50%, -50%); }
+.yt-media.playing .yt-big-play.demo-hover { opacity: 1; }
 .dialog-heading { min-width: 0; flex: 1; }
 .dialog-heading .mini-eyebrow { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 440px; }
 .dialog-header > .demo-controls { flex: none; }

@@ -6,6 +6,6 @@
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
-    "check": "node --check src/app.js && node --check src/map.js && node --check src/data.js && node --check src/youtube/app.js && node --check src/youtube/views.js && node --check src/youtube/media.js && node --check src/youtube/data.js && node --check src/youtube/icons.js && node --check src/demo.js && node --check src/demo-scenarios.js && node --check src/maps-context.js && node --check src/maps-views.js && node --check src/youtube/context.js"
+    "check": "node --check src/app.js && node --check src/map.js && node --check src/data.js && node --check src/youtube/app.js && node --check src/youtube/views.js && node --check src/youtube/media.js && node --check src/youtube/data.js && node --check src/youtube/icons.js && node --check src/demo.js && node --check src/demo-scenarios.js && node --check src/maps-context.js && node --check src/maps-views.js && node --check src/youtube/context.js && node --check src/demo-pointer.js"
   }
 }
