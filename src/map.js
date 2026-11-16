@@ -29,14 +29,14 @@ const streetNetwork = `
   M600 108 558 127 585 182`;
 
 const baseMap = `
-  <rect width="600" height="400" fill="#f0f1ed"/>
+  <rect width="600" height="400" fill="#f1f3f4"/>
   <path d="M0 0H110L135 67 98 90 31 73 0 105Z" fill="#c9e6bd"/>
   <path d="m303 0 18 50 48-14 36-36Z" fill="#c6e4b9"/>
   <path d="M477 0h123v126l-46-15-20-49-42 16Z" fill="#d3e8c4"/>
   <path d="m-10 362 57-31 38 28-24 41H0Zm329-140 27 44 50-26-26-47Z" fill="#cee6c1"/>
   <path d="m433 306 29 46 71 39 28-16-45-82Z" fill="#c6e4ba"/>
   <path d="M579-10c-32 81 35 141-1 220s27 133 20 210" fill="none" stroke="#b3dce7" stroke-width="15"/>
-  <g fill="#e8e6df" stroke="#dddcd5" stroke-width="1">
+  <g fill="#e7e9ed" stroke="#dddcd5" stroke-width="1">
     <path d="m112 107 44 13 16 30-24 15Z"/><path d="m163 60 27-9 20 40-27 11Z"/>
     <path d="m243 79 31-12 35 59-27 17Z"/><path d="m330 73 43-13 17 34-36 21Z"/>
     <path d="m424 91 20-10 23 36-23 12Z"/><path d="m370 127 43-26 21 37-46 25Z"/>
@@ -52,21 +52,20 @@ const baseMap = `
   <path d="m226 202 54-30 28 45-60 31Z" fill="#f4ead0"/>
   <path d="${streetNetwork}" fill="none" stroke="#d9dcd8" stroke-width="12" stroke-linejoin="round"/>
   <path d="${streetNetwork}" fill="none" stroke="#fff" stroke-width="8" stroke-linejoin="round"/>
-  <path d="M-30 307 150 234 282 164 410 81 650-10" fill="none" stroke="#e4d3a4" stroke-width="17"/>
-  <path d="M-30 307 150 234 282 164 410 81 650-10" fill="none" stroke="#fff1c5" stroke-width="13"/>
+  <path d="M-30 307 150 234 282 164 410 81 650-10" fill="none" stroke="#c6cfd8" stroke-width="17"/>
+  <path d="M-30 307 150 234 282 164 410 81 650-10" fill="none" stroke="#e7edf2" stroke-width="13"/>
   <path d="M-10 365 172 283 309 212 463 116 645 48" fill="none" stroke="#d4d9d9" stroke-width="15"/>
   <path d="M-10 365 172 283 309 212 463 116 645 48" fill="none" stroke="#fff" stroke-width="10"/>
-  <g font-family="Arial,sans-serif" font-size="10" fill="#7c827b" text-anchor="middle">
-    <text x="226" y="200" transform="rotate(-29 226 200)">Peachtree Rd</text>
-    <text x="347" y="195" transform="rotate(-31 347 195)">New Peachtree Rd</text>
-    <text x="194" y="114" transform="rotate(17 194 114)">Park Avenue</text>
-    <text x="431" y="303" transform="rotate(29 431 303)">Buford Highway</text>
-    <text x="270" y="100" transform="rotate(61 270 100)">Oakcliff Rd</text>
-    <text x="194" y="363">Chamblee</text><text x="500" y="81">Northwoods</text>
-    <text x="65" y="47" fill="#63885b" font-size="11">Autumn Park</text>
-    <text x="512" y="349" fill="#63885b">Honeysuckle</text><text x="512" y="362" fill="#63885b">Park</text>
-    <text x="87" y="163" font-size="13" letter-spacing="2" fill="#92958e">DORAVILLE</text>
-  </g>`;
+`;
+
+// Keep labels in CSS pixels so map geometry never stretches the type.
+const mapLabels = [
+  ['Peachtree Rd', 37.7, 50, -34], ['New Peachtree Rd', 57.8, 48.8, -36],
+  ['Park Avenue', 32.3, 28.5, 20], ['Buford Highway', 71.8, 75.8, 34],
+  ['Oakcliff Rd', 45, 25, 65], ['Chamblee', 32.3, 90.8, 0],
+  ['Northwoods', 83.3, 20.3, 0], ['Autumn Park', 10.8, 11.8, 0, 'park'],
+  ['Honeysuckle Park', 85.3, 88.8, 0, 'park'], ['DORAVILLE', 14.5, 40.8, 0, 'district'],
+];
 
 export function mapMarkup({ kind = 'search', place = places[0], category = 'coffee', expanded = false, zoom = 1, step = 0, alternate = false, markerIds = null } = {}) {
   const route = kind === 'route' || kind === 'navigation';
@@ -80,7 +79,8 @@ export function mapMarkup({ kind = 'search', place = places[0], category = 'coff
     <svg class="map-art" viewBox="0 0 600 400" preserveAspectRatio="none" aria-hidden="true">${baseMap}
       ${route ? `<path d="${alternate ? normalRoute : alternative}" class="route-alternative"/><path d="${routePath}" class="route-halo"/><path d="${routePath}" class="route-line"/>` : ''}
     </svg>
-    ${visiblePlaces.map(p => `<button class="map-marker ${p.category} ${route || kind === 'detail' ? 'destination-marker' : ''}" style="left:${p.x}%;top:${p.y}%" data-action="view-place" data-place="${p.id}" aria-label="View ${p.name}">${icon(p.category === 'parks' ? 'park' : p.category === 'food' ? 'food' : 'coffee')}<span>${p.name}</span></button>`).join('')}
+    ${mapLabels.map(([name, x, y, angle, type = '']) => `<span class="map-road-label ${type}" style="left:${x}%;top:${y}%;--angle:${angle}deg" aria-hidden="true">${name}</span>`).join('')}
+    ${visiblePlaces.map(p => `<button class="map-marker ${p.category} ${route || kind === 'detail' ? 'destination-marker' : ''}" style="left:${p.x}%;top:${p.y}%" data-action="view-place" data-place="${p.id}" aria-label="View ${p.name}">${icon(p.category === 'parks' ? 'park' : p.category === 'food' ? 'food' : 'coffee')}</button><span class="map-place-label ${p.category} ${p.x > 65 ? 'align-left' : ''} ${route || kind === 'detail' ? 'destination-label' : ''}" style="left:${p.x}%;top:${p.y}%">${p.name}</span>`).join('')}
     <span class="my-location ${kind === 'navigation' ? 'navigation-location' : ''}" style="left:${kind === 'navigation' && step === 3 ? place.x : kind === 'navigation' && step > 1 ? 51.5 : 27}%;top:${kind === 'navigation' && step === 3 ? place.y : kind === 'navigation' && step > 1 ? 53 : 74}%" aria-label="Your demo location">${kind === 'navigation' ? icon('navigation') : ''}</span>
     ${route && kind !== 'navigation' ? `<span class="map-route-label">${alternate ? place.minutes + 2 : place.minutes} min</span>` : ''}
     </div><span class="map-attribution"><b>Google</b><span>Illustrated demo map</span></span>

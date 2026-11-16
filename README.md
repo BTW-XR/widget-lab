@@ -35,6 +35,12 @@ Photo motion previews were rendered locally with FFmpeg. All final assets are in
 
 Six connected, Google Maps-inspired widgets for exploring focused web experiences. Each widget has a compact card and an expanded view. All place data, reviews, prices, routes, and travel times are fictional demo content; the map is an original SVG illustration.
 
+## Visual system
+
+The study uses a fixed **1440 px canvas**, three **432 × 400 px cards** per row, and 24 px column gaps. Maps expands to **1000 × 704 px**; YouTube expands to **1040 × 704 px**. Smaller windows scroll horizontally; there are no viewport breakpoints or fluid type sizes. Fullscreen video still uses the available screen.
+
+Maps uses locally bundled Google Sans, teal actions, outlined secondary buttons, and restrained map surfaces. YouTube uses locally bundled Roboto, neutral surfaces, black action pills, and red playback accents. Body and control text is generally 14–16 px; metadata is 12–13 px. Both font families are licensed under the SIL Open Font License; licenses are in `assets/fonts/`.
+
 ## Run locally
 
 Requires Node.js 18 or newer. No dependencies or API keys are needed.
@@ -72,7 +78,9 @@ The navigation mute control demonstrates UI state only; the demo does not play a
 - `src/data.js`: mock places and travel modes.
 - `src/map.js`: original SVG map, markers, and route rendering.
 - `src/icons.js`: shared SVG icon helpers.
-- `src/styles.css`: design tokens, widget styles, expanded states, responsive breakpoints.
+- `src/fonts.css`: local Google Sans and Roboto font faces.
+- `src/gallery.css`: shared fixed canvas, gallery, controls, and dialogs.
+- `src/styles.css`: Maps components and expanded states.
 - `scripts/serve.mjs`: dependency-free local static server.
 - `scripts/build.mjs`: static build output.
 
@@ -84,10 +92,10 @@ All application assets are local. The MollyTea image is reused from the user's s
 - Browser smoke check: search → place → save → walking directions → simulated arrival.
 - YouTube smoke check: search → playback → like/save, speed, seek → next queued video, channel subscription, notifications, Shorts, and topic filters.
 - Saved videos and subscriptions survive reload; the collection switch retains access to all six Maps widgets.
-- Desktop and mobile layout checks.
+- Fixed desktop gallery and expanded-view layout checks.
 
 ## Suggested commit message
 
 ```text
-feat: add six YouTube widgets with native playback and persistent personal collections
+style: refine Maps and YouTube widgets with fixed layouts and brand typography
 ```
