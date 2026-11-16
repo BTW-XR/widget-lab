@@ -15,11 +15,11 @@ Six YouTube-inspired widgets use the same compact-and-expanded approach:
 | Subscriptions | Creator filters and a relevant upload | Full channel feed, profile, subscription controls |
 | Watch later | Two saved videos and Play all | Full saved queue, remove, shuffle and sequential playback |
 
-Playback is real HTML video: play/pause, seek, playback speed, and fullscreen where supported. Only one clip plays at a time. Photo previews are silent 12-second motion clips; the nature sample is an actual 5-second video. No account, YouTube API, or external media request is needed at runtime. Channel identities, views, and likes are mock data.
+Playback is real HTML video: play/pause, seek, playback speed, and fullscreen where supported. In ordinary use, only one clip plays at a time. Independent demo widgets can play muted clips simultaneously. Photo previews are silent 12-second motion clips; the nature sample is an actual 5-second video. No account, YouTube API, or external media request is needed at runtime. Channel identities, views, and likes are mock data.
 
 Search for `Kyoto`, `design`, or `nature`; open a result, save it, and see it in Watch later. Play all advances through the saved queue. Shorts support next/previous, with arrow keys in the expanded view. Subscriptions, likes, Watch later, and simulated notification preferences persist on this device. Notification controls do not request OS permissions or send alerts.
 
-YouTube source lives in `src/youtube/`: `data.js` for mock content, `views.js` for widget markup, `app.js` for state and actions, `media.js` for native playback, and `styles.css` for presentation. `src/collections.css` adds the shared collection switch. The local server supports byte ranges for media seeking.
+YouTube source lives in `src/youtube/`: `data.js` for mock content, `views.js` for widget markup, `app.js` for initialization, `context.js` for state and actions, `media.js` for native playback, and `styles.css` for presentation. `src/collections.css` adds the shared collection switch. The local server supports byte ranges for media seeking.
 
 Media attribution:
 
@@ -42,6 +42,14 @@ The gallery is responsive and rearranges fixed **360 × 336 px cards** into thre
 Expanded Maps and YouTube content remains **998 × 616 px** and **1038 × 616 px** respectively. The modal shell fits the viewport, keeps its close control visible, and allows scrolling across the fixed content when needed. Shorts fills its compact frame with video and overlays controls along the right edge.
 
 Maps uses locally bundled Google Sans, teal actions, outlined secondary buttons, and restrained map surfaces. YouTube uses locally bundled Roboto, neutral surfaces, and black action pills. Small play logos, the red Watch later playback button, and subtle subscription accents reinforce its identity without tinting whole cards. Body and control text is generally 14–16 px; metadata is 12–13 px. Both font families are licensed under the SIL Open Font License; licenses are in `assets/fonts/`.
+
+## Demo mode
+
+Use the play icon beside a widget title to loop through its compact interactions, expanded view, and return to the gallery. **Demo all** runs the six compact cards together without opening dialogs. Each widget performs roughly one action per second; video playback gets a brief extra moment.
+
+Pause or resume an individual widget, or use **Pause all** / **Resume all**. **Exit demos** restores the ordinary gallery and its previous filter. Clicking or typing inside a running widget takes over that widget only; its temporary state stays available for manual exploration until you exit or replay it. Opening a widget manually pauses the other demos until the dialog closes. Moving the page to the background pauses playback; resume explicitly when you return.
+
+Each demo has its own in-memory state. Demo saves, likes, subscriptions, navigation, speed, and progress never overwrite normal preferences. Exiting restores the original state with videos paused. A subtle highlight and the existing caption identify each action. Media errors pause only the affected demo; replay retries its scenario. Browser fullscreen is always a manual action.
 
 ## Run locally
 
@@ -76,7 +84,11 @@ The navigation mute control demonstrates UI state only; the demo does not play a
 
 ## Source structure
 
-- `src/app.js`: widget renderers, shared state, interactions, and dialog lifecycle.
+- `src/app.js`: Maps gallery initialization.
+- `src/maps-context.js` and `src/maps-views.js`: Maps interaction state and rendering.
+- `src/demo.js`: gallery, dialogs, isolated demo contexts, playback controls, and cancellable scheduling.
+- `src/demo-scenarios.js`: compact and expanded action sequences for all twelve widgets.
+- `src/demo.css`: compact demo controls and action highlights.
 - `src/data.js`: mock places and travel modes.
 - `src/map.js`: original SVG map, markers, and route rendering.
 - `src/icons.js`: shared SVG icon helpers.
@@ -99,5 +111,5 @@ All application assets are local. The MollyTea image is reused from the user's s
 ## Suggested commit message
 
 ```text
-style: restore the neutral Now playing button
+Add individual and simultaneous widget demo playback
 ```
