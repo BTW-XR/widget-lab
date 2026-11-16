@@ -67,6 +67,14 @@ npm run check   # JavaScript syntax checks
 npm run build   # Copy the static application to dist/
 ```
 
+## GitHub Pages
+
+The project is hosted in [BTW-XR/widget-lab](https://github.com/BTW-XR/widget-lab). In the repository's **Settings → Pages**, the publishing source is **GitHub Actions**.
+
+Every push to `main` runs the JavaScript checks, builds the site, and publishes only `dist/`. The workflow can also be started manually from **Actions → Deploy Widget Lab to GitHub Pages**. The published URL is shown in Settings → Pages and in the workflow's `github-pages` deployment. Maps opens at the site root; YouTube is at `youtube.html`. All asset paths are relative, so both pages work under the repository's project URL.
+
+No deployment secrets or package installation are needed. Repository documentation and Sites configuration are excluded from the published site.
+
 ## The six widgets
 
 | Widget | Compact state | Expanded state |
@@ -112,5 +120,5 @@ All application assets are local. The MollyTea image is reused from the user's s
 ## Suggested commit message
 
 ```text
-Tune widget demo pacing with contextual pauses
+Configure automatic GitHub Pages deployment
 ```
