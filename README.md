@@ -41,7 +41,7 @@ The gallery is responsive and rearranges fixed **360 × 336 px cards** into thre
 
 Expanded Maps and YouTube content remains **998 × 616 px** and **1038 × 616 px** respectively. The modal shell fits the viewport, keeps its close control visible, and allows scrolling across the fixed content when needed. Shorts fills its compact frame with video and overlays controls along the right edge.
 
-Maps uses locally bundled Google Sans, teal actions, outlined secondary buttons, and restrained map surfaces. YouTube uses locally bundled Roboto, neutral surfaces, and black action pills. Small play logos, red primary playback buttons, and subtle subscription accents reinforce its identity without tinting whole cards. Body and control text is generally 14–16 px; metadata is 12–13 px. Both font families are licensed under the SIL Open Font License; licenses are in `assets/fonts/`.
+Maps uses locally bundled Google Sans, teal actions, outlined secondary buttons, and restrained map surfaces. YouTube uses locally bundled Roboto, neutral surfaces, and black action pills. Small play logos, the red Watch later playback button, and subtle subscription accents reinforce its identity without tinting whole cards. Body and control text is generally 14–16 px; metadata is 12–13 px. Both font families are licensed under the SIL Open Font License; licenses are in `assets/fonts/`.
 
 ## Run locally
 
@@ -99,5 +99,5 @@ All application assets are local. The MollyTea image is reused from the user's s
 ## Suggested commit message
 
 ```text
-style: add restrained YouTube brand accents and play marks
+style: restore the neutral Now playing button
 ```

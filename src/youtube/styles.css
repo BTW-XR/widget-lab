@@ -125,10 +125,6 @@
 .yt-big-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); border-radius: 50%; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; color: #fff; background: #0009; border: 0; backdrop-filter: blur(8px); z-index: 2; }
 .yt-big-play .icon { width: 28px; height: 28px; margin-left: 2px; }
 .yt-big-play:hover { background: #000b; }
-/* Brand red is reserved for playback actions and small identity marks. */
-.yt-player .yt-big-play { width: 56px; height: 40px; border-radius: 12px; background: var(--yt-red); backdrop-filter: none; }
-.yt-player .yt-big-play .icon { width: 24px; height: 24px; }
-.yt-player .yt-big-play:hover { background: var(--yt-red-hover); }
 .yt-media.playing .yt-big-play { opacity: 0; }
 .yt-media.playing:hover .yt-big-play, .yt-media.playing .yt-big-play:focus-visible { opacity: 1; }
 .yt-preview-badge { position: absolute; top: 12px; left: 12px; background: #0005; border: 1px solid #ffffff30; color: #fffe; font-size: 11px; padding: 4px 8px; border-radius: 5px; backdrop-filter: blur(8px); }
