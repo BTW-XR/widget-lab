@@ -37,7 +37,9 @@ Six connected, Google Maps-inspired widgets for exploring focused web experience
 
 ## Visual system
 
-The study uses a fixed **1440 px canvas**, three **432 × 400 px cards** per row, and 24 px column gaps. Maps expands to **1000 × 704 px**; YouTube expands to **1040 × 704 px**. Smaller windows scroll horizontally; there are no viewport breakpoints or fluid type sizes. Fullscreen video still uses the available screen.
+The gallery is responsive and rearranges fixed **360 × 336 px cards** into three, two, or one column. Cards never scale with the browser width: their text, controls, and internal layouts retain the same dimensions. On screens narrower than a card, only the gallery scrolls horizontally.
+
+Expanded Maps and YouTube content remains **998 × 616 px** and **1038 × 616 px** respectively. The modal shell fits the viewport, keeps its close control visible, and allows scrolling across the fixed content when needed. Shorts fills its compact frame with video and overlays controls along the right edge.
 
 Maps uses locally bundled Google Sans, teal actions, outlined secondary buttons, and restrained map surfaces. YouTube uses locally bundled Roboto, neutral surfaces, black action pills, and red playback accents. Body and control text is generally 14–16 px; metadata is 12–13 px. Both font families are licensed under the SIL Open Font License; licenses are in `assets/fonts/`.
 
@@ -97,5 +99,5 @@ All application assets are local. The MollyTea image is reused from the user's s
 ## Suggested commit message
 
 ```text
-style: refine Maps and YouTube widgets with fixed layouts and brand typography
+style: compact fixed-size widgets within a responsive gallery
 ```

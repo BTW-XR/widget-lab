@@ -1,4 +1,4 @@
-/* Maps components — fixed 432 × 400 cards and 1000 × 704 expanded views. */
+/* Maps components — fixed 360 × 336 cards and 1000 × 704 expanded views. */
 .maps-page { --blue: #0b6d7d; --blue-dark: #005361; --blue-light: #d8f2f5; --green: #137333; }
 .maps-logo { width: 25px; height: 34px; display: block; }
 .brand-name { font-size: 27px; line-height: 34px; color: #5f6368; letter-spacing: -.6px; }
@@ -221,9 +221,76 @@
 .saved-empty .text-button { width: auto; }
 
 
+/* Compact cards keep their type scale while reducing image and spacing budgets. */
+.widget-card .explore-panel, .widget-card .saved-panel { padding: 18px 18px 0; }
+.widget-card .widget-content-heading h2 { font-size: 22px; line-height: 28px; }
+.widget-card .nearby-decoration, .widget-card .saved-decoration { width: 36px; height: 36px; }
+.widget-card .explore-panel > .category-chips { margin: 14px 0 4px; }
+.widget-card .chip { height: 32px; padding: 0 10px; gap: 6px; }
+.widget-card .place-row { min-height: 82px; padding: 12px 0; gap: 12px; }
+.widget-card .place-thumb { width: 56px; height: 56px; border-radius: 10px; }
+.widget-card .explore-more, .widget-card .saved-more { height: 50px; min-height: 50px; flex-shrink: 0; }
+.widget-card .saved-tabs { margin-top: 12px; height: 40px; gap: 24px; }
+.widget-card .saved-tabs button { padding-bottom: 10px; }
+.widget-card .saved-place-list .place-row { min-height: 82px; padding: 12px 0; }
+.widget-card .saved-place-list .place-thumb { width: 56px; height: 56px; }
+.widget-card .nav-instruction { top: 12px; left: 12px; right: 12px; height: 88px; padding: 16px; gap: 16px; border-radius: 16px; }
+.widget-card .turn-icon .icon { width: 32px; height: 32px; }
+.widget-card .nav-demo-tag { top: 110px; left: 16px; }
+.widget-card .navigation-bottom { height: 76px; padding: 12px 16px; border-radius: 20px 20px 0 0; }
+.widget-card .nav-end, .widget-card .next-turn { width: 40px; height: 40px; }
+
+/* Search keeps its controls prominent in a smaller map viewport. */
+.widget-card .search-overlay { top: 12px; left: 12px; right: 12px; }
+.widget-card .search-bar { height: 48px; padding-left: 14px; gap: 10px; }
+.widget-card .search-bar input { font-size: 17px; }
+.widget-card .search-overlay > .category-chips { margin-top: 8px; }
+.widget-card .search-overlay .chip { height: 32px; font-size: 14px; padding: 0 10px; }
+.widget-card .search-results { margin-top: 8px; max-height: 194px; padding-top: 8px; border-radius: 16px; }
+.widget-card .search-caption { font-size: 12px; padding: 2px 14px 6px; }
+.widget-card .search-result { padding: 10px 14px; gap: 10px; }
+.widget-card .search-result strong { font-size: 15px; }
+.widget-card .search-result small { font-size: 13px; }
+.widget-card .map-location-chip { left: 12px; bottom: 30px; height: 32px; font-size: 13px; padding: 0 10px; }
+.widget-card .recenter-button { right: 12px; bottom: 28px; width: 36px; height: 36px; }
+.widget-card .map-place-label { font-size: 12px; }
+
+/* Place essentials sit together instead of pinning actions to a distant edge. */
+.widget-card .place-hero { height: 180px; }
+.widget-card .photo-category { left: 16px; bottom: 12px; font-size: 13px; }
+.widget-card .photo-save { top: 12px; right: 12px; width: 36px; height: 36px; }
+.widget-card .place-information { padding: 14px 18px 16px; }
+.widget-card .place-title { gap: 12px; }
+.widget-card .place-title h2 { font-size: 26px; line-height: 32px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.widget-card .place-title > span { font-size: 14px; }
+.widget-card .place-rating { margin-top: 6px; font-size: 14px; gap: 4px; }
+.widget-card .place-rating .review-count { font-size: 13px; }
+.widget-card .place-actions { margin-top: 16px; padding-top: 0; gap: 8px; }
+.widget-card .place-actions > button { padding: 0 12px; }
+
+/* Route inputs and the journey summary share one compact vertical rhythm. */
+.widget-card .directions-panel { padding: 16px 18px 0; }
+.widget-card .transport-tabs { height: 40px; flex-shrink: 0; }
+.widget-card .transport-tabs button { padding: 0 10px; gap: 6px; }
+.widget-card .transport-tabs .icon { width: 18px; height: 18px; }
+.widget-card .destination-fields { margin-top: 12px; gap: 10px; }
+.widget-card .origin-field, .widget-card .destination-field { height: 42px; font-size: 15px; }
+.widget-card .destination-field select { font-size: 16px; }
+.widget-card .location-label { font-size: 13px; }
+.widget-card .journey-line { padding-top: 14px; }
+.widget-card .journey-line i { height: 25px; }
+.widget-card .route-preview { padding: 12px 0; gap: 10px; }
+.widget-card .route-duration { font-size: 34px; line-height: 38px; }
+.widget-card .route-duration > .route-distance { font-size: 15px; padding-left: 6px; }
+.widget-card .route-preview p { font-size: 14px; }
+.widget-card .route-traffic { font-size: 12px; margin-top: 6px; }
+.widget-card .route-mini-map { width: 76px; height: 76px; border-radius: 12px; }
+.widget-card .directions-footer { height: 60px; }
+.widget-card .directions-footer > span { font-size: 14px; }
+
 /* Expanded views retain the same typography scale and component geometry. */
-.dialog-body { min-height: 0; height: 616px; overflow: hidden; }
-.expanded-widget { height: 616px; }
+.dialog-body { min-height: 0; height: calc(100% - 86px); overflow: auto; }
+.expanded-widget { width: 998px; height: 616px; }
 .expanded-widget.explore-widget, .expanded-widget.details-widget, .expanded-widget.directions-widget, .expanded-widget.saved-widget { display: grid; grid-template-columns: 432px 566px; }
 .expanded-widget .explore-panel, .expanded-widget .saved-panel { padding: 28px 24px 0; }
 .expanded-widget .widget-content-heading h2 { font-size: 24px; }
