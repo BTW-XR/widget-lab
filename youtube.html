@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fafafa" />
+    <meta name="description" content="Six focused YouTube-inspired widgets. Find something good, watch a little, and save the rest for later." />
+    <title>YouTube — Widget Lab</title>
+    <link rel="icon" href="./assets/youtube/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./src/styles.css" />
+    <link rel="stylesheet" href="./src/collections.css" />
+    <link rel="stylesheet" href="./src/youtube/styles.css" />
+  </head>
+  <body class="youtube-page">
+    <header class="site-header">
+      <a class="brand yt-brand" href="./youtube.html" aria-label="YouTube Widget Lab home"><span class="yt-logo" aria-hidden="true"><svg viewBox="0 0 32 23"><rect y="1" width="32" height="22" rx="7" fill="#ff0033"/><path d="m13 6 9 6-9 5Z" fill="white"/></svg></span><span class="yt-wordmark">YouTube</span><span class="brand-divider"></span><span class="brand-lab">Widget lab</span></a>
+      <div class="header-right"><nav class="collection-switch" aria-label="Widget collection"><a href="./index.html">Maps</a><a href="./youtube.html" aria-current="page">YouTube</a></nav><button class="icon-button" data-action="reset" aria-label="Reset YouTube demo" title="Reset demo"><span data-icon="reset"></span></button></div>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="page-title"><div><p class="eyebrow">SMALL WIDGETS. ENDLESS CURIOSITY.</p><h1 id="page-title">A little YouTube. Just for you<span>.</span></h1><p class="intro-description">Find your next rabbit hole. Keep a good idea. Make a little time for what you love.</p></div><div class="yt-demo-label"><span></span> Interactive collection <b>02</b></div></section>
+      <nav class="gallery-toolbar" aria-label="Widget categories"><div class="filters"><button class="filter active" data-filter="all" aria-pressed="true">All widgets <span>6</span></button><button class="filter" data-filter="discover" aria-pressed="false">Discover</button><button class="filter" data-filter="watch" aria-pressed="false">Watch</button><button class="filter" data-filter="library" aria-pressed="false">Your corner</button></div><span class="interaction-hint"><span data-icon="expand"></span> Small by default. More when you want it.</span></nav>
+      <section id="youtube-grid" class="widget-grid" aria-label="YouTube widget collection"></section>
+      <footer class="page-footer"><span><span class="footer-dot"></span> Six widgets. A little more you.</span><span>Independent UI study <span class="footer-separator">/</span> Mock channels · short demo clips</span></footer>
+    </main>
+    <dialog id="youtube-dialog" aria-labelledby="yt-dialog-title"><div id="yt-dialog-content"></div></dialog>
+    <div id="yt-toast" class="yt-toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./src/youtube/app.js"></script>
+  </body>
+</html>
